@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Application/Application.csproj" />
+    <Project Path="src/Core/Core.csproj" />
+    <Project Path="src/Infrastructure/Infrastructure.csproj" Id="9dd93d46-7647-4774-8973-0b230c9c4740" />
+    <Project Path="src/Services/Services.csproj" Id="38a7c52d-8e80-4b23-8ffa-efd23e6930a9" />
+    <Project Path="src/Startup/Startup.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Integration/Integration.csproj" Id="ef7470c9-ce97-4037-b17d-d44ada8b29b7" />
+    <Project Path="test/Unit/Unit.csproj" Id="d2def18f-15a9-4a5b-9b74-f73b3c67b6bc" />
+  </Folder>
+</Solution>
