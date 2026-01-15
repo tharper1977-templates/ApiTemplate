@@ -2,8 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="OrgName.solutionName.Application" />
+    <InternalsVisibleTo Include="OrgName.solutionName.Application.Tests" />
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "API Template",
+  "name": "Clean Architecture API Service Template",
+  "identity": "CleanArchApi",
+  "shortName": "cleanapi",
+  "description": "A .NET 10 template for building clean architecture API services with onion/adapter architecture",
+  "groupIdentity": "CleanArchApi",
+  "tags": {
+    "language": "C#",
+    "type": "project",
+    "classification": "Web/API"
+  },
+  "baselines": {
+    "v1": {
+      "description": "v1 baseline",
+      "defaultName": "ApiService"
+    }
+  },
+  "preferNameDirectory": true,
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net10.0",
+          "description": ".NET 10.0"
+        }
+      ],
+      "defaultValue": "net10.0",
+      "description": "Target framework"
+    },
+    "orgName": {
+      "type": "parameter",
+      "datatype": "text",
+      "required": true,
+      "description": "Organization name for namespace root (e.g., MyOrg)",
+      "replaces": "OrgName"
+    },
+    "solutionName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "Identity",
+      "description": "Solution name from project name"
+    },
+    "useApi": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Generate API controllers and middleware",
+      "defaultValue": "true"
+    },
+    "useInboundMessaging": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Generate inbound message consumers",
+      "defaultValue": "false"
+    },
+    "useSwagger": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Enable Swagger/OpenAPI documentation",
+      "defaultValue": "true"
+    },
+    "useHealthChecks": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Enable health checks endpoint",
+      "defaultValue": "true"
+    },
+    "useFluentValidation": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Enable FluentValidation for request validation",
+      "defaultValue": "true"
+    },
+    "useWorkers": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "Generate background worker services",
+      "defaultValue": "true"
+    },
+    "databaseEngine": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "none",
+          "description": "No database"
+        },
+        {
+          "choice": "sqlserver",
+          "description": "SQL Server"
+        },
+        {
+          "choice": "postgres",
+          "description": "PostgreSQL"
+        },
+        {
+          "choice": "cassandra",
+          "description": "Cassandra"
+        }
+      ],
+      "defaultValue": "none",
+      "description": "Database engine for repositories"
+    },
+    "externalApiClients": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "Comma-separated list of external API client domains (e.g., Payment,Notification,User)",
+      "defaultValue": ""
+    },
+    "externalDatabases": {
+      "type": "parameter",
+      "datatype": "text",
+      "description": "Comma-separated list of external GOLD databases (e.g., Audit,Analytics)",
+      "defaultValue": ""
+    },
+    "testFramework": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "xunit",
+          "description": "xUnit"
+        },
+        {
+          "choice": "nunit",
+          "description": "NUnit"
+        },
+        {
+          "choice": "mstest",
+          "description": "MSTest"
+        }
+      ],
+      "defaultValue": "xunit",
+      "description": "Test framework for unit and integration tests"
+    },
+    "UseXUnit": {
+      "type": "computed",
+      "value": "(testFramework == \"xunit\")"
+    },
+    "UseNUnit": {
+      "type": "computed",
+      "value": "(testFramework == \"nunit\")"
+    },
+    "UseMSTest": {
+      "type": "computed",
+      "value": "(testFramework == \"mstest\")"
+    },
+    "UseSqlServer": {
+      "type": "computed",
+      "value": "(databaseEngine == \"sqlserver\")"
+    },
+    "UsePostgres": {
+      "type": "computed",
+      "value": "(databaseEngine == \"postgres\")"
+    },
+    "UseCassandra": {
+      "type": "computed",
+      "value": "(databaseEngine == \"cassandra\")"
+    },
+    "HasDatabase": {
+      "type": "computed",
+      "value": "(databaseEngine != \"none\")"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!useApi)",
+          "exclude": [
+            "src/Services/**",
+            "src/Startup/**"
+          ]
+        },
+        {
+          "condition": "(!useInboundMessaging)",
+          "exclude": [
+            "src/Services/Messaging/**"
+          ]
+        },
+        {
+          "condition": "(!useWorkers)",
+          "exclude": [
+            "src/Startup/Worker.cs"
+          ]
+        },
+        {
+          "condition": "(!HasDatabase)",
+          "exclude": [
+            "src/Infrastructure/Repositories/**",
+            "src/Infrastructure/DbContexts/**"
+          ]
+        },
+        {
+          "condition": "(externalApiClients == \"\")",
+          "exclude": [
+            "src/Infrastructure/Clients/**"
+          ]
+        },
+        {
+          "condition": "(externalDatabases == \"\")",
+          "exclude": [
+            "src/Infrastructure/ExternalRepositories/**"
+          ]
+        },
+        {
+          "condition": "(UseXUnit == false)",
+          "exclude": [
+            "tests/Unit/GlobalUsings.XUnit.cs",
+            "tests/Integration/GlobalUsings.XUnit.cs"
+          ]
+        },
+        {
+          "condition": "(UseNUnit == false)",
+          "exclude": [
+            "tests/Unit/GlobalUsings.NUnit.cs",
+            "tests/Integration/GlobalUsings.NUnit.cs"
+          ]
+        },
+        {
+          "condition": "(UseMSTest == false)",
+          "exclude": [
+            "tests/Unit/GlobalUsings.MSTest.cs",
+            "tests/Integration/GlobalUsings.MSTest.cs"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,17 +1,20 @@
-namespace Startup
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+namespace OrgName.solutionName.Startup;
+
+/// <summary>
+/// Background worker service for long-running tasks.
+/// </summary>
+public class Worker(ILogger<Worker> logger) : BackgroundService
 {
-    public class Worker(ILogger<Worker> logger) : BackgroundService
+    /// <summary>
+    /// Executes the background worker task.
+    /// </summary>
+    /// <param name="stoppingToken">Cancellation token for graceful shutdown.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                if (logger.IsEnabled(LogLevel.Information))
-                {
-                    logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                }
-                await Task.Delay(1000, stoppingToken);
-            }
-        }
+        throw new NotImplementedException();
     }
 }
