@@ -171,8 +171,8 @@
         {
           "condition": "(!useApi)",
           "exclude": [
-            "src/Services/**",
-            "src/Startup/**"
+            "src/Services/Controllers/**",
+            "src/Services/DTOs/**"
           ]
         },
         {

@@ -2,7 +2,13 @@
   <Folder Name="/Solution Items/">
     <File Path=".dockerignore" />
     <File Path=".gitignore" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="DOCUMENTATION.md" />
+    <File Path="DOCUMENTATION_SUMMARY.md" />
+    <File Path="IMPLEMENTATION.md" />
+    <File Path="QUICKSTART.md" />
     <File Path="README.md" />
+    <File Path="START_HERE.md" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Application/Application.csproj" />
